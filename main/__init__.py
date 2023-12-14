@@ -21,7 +21,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    work_completed = models.IntegerField(initial=0)
 
 
 # PAGES
@@ -30,7 +30,13 @@ class RoundStartWait(WaitPage):
 
 
 class WorkingStage(Page):
-    pass
+    timeout_seconds = 60
+    
+    @staticmethod
+    def live_method(player, data):
+        print('received a bid from', player.id_in_group, ':', data)
+        if data == True:
+            player.work_completed += 1
 
 
 class WorkingStageWait(WaitPage):

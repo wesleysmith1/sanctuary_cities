@@ -3,7 +3,75 @@
 {{ endblock }}
 {{ block content }}
 
-    {{ formfields }}
-    {{ next_button }}
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td id="cell-1">1</td>
+                <td id="cell-2">2</td>
+                <td id="cell-3">3</td>
+            </tr>
+            <tr>
+                <td id="cell-4">4</td>
+                <td id="cell-5">5</td>
+                <td id="cell-6">6</td>
+            </tr>
+            <tr>
+                <td id="cell-7">7</td>
+                <td id="cell-8">8</td>
+                <td id="cell-9">9</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="input-group mb-3">
+            <label for="work-input">Label text:</label>
+            <input id="work-input" type="number" class="form-control" max=9 min=0 placeholder="Enter an integer">
+            <button id="work-submit" class="btn btn-primary" type="button">Submit</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let total = 0
+    window.onload = function() {
+        function generateMatrix() {
+            total = 0
+            for (let i = 1; i <= 9; i++) {
+                const randomNumber = Math.random();
+                const choice = randomNumber < 0.5 ? 0 : 1;
+                console.log(choice)
+                total += choice
+                $('#cell-'+i).html(choice);
+            }
+        }
+
+        function resetForm() {
+            $("#work-input").val(null)
+        }
+        generateMatrix()
+
+        $('#work-submit').click(function() {
+
+            if (total == $('#work-input').val()) {
+                liveSend(true)
+            }
+
+            generateMatrix()
+            resetForm()
+
+        });
+    };
+      
+</script>
 
 {{ endblock }}
