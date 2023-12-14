@@ -3,6 +3,9 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
+        name='sanctuary_city', app_sequence=['main'], num_demo_participants=2,
+    ),
+    dict(
         name='guess_two_thirds',
         display_name="Guess 2/3 of the Average",
         app_sequence=['guess_two_thirds', 'payment_info'],

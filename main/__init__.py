@@ -8,8 +8,8 @@ Your app description
 
 class C(BaseConstants):
     NAME_IN_URL = 'main'
-    PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 1
+    PLAYERS_PER_GROUP = 2
+    NUM_ROUNDS = 15
 
 
 class Subsession(BaseSubsession):
@@ -25,16 +25,28 @@ class Player(BasePlayer):
 
 
 # PAGES
-class MyPage(Page):
+class RoundStartWait(WaitPage):
     pass
 
 
-class ResultsWaitPage(WaitPage):
+class WorkingStage(Page):
     pass
 
 
-class Results(Page):
+class WorkingStageWait(WaitPage):
     pass
 
 
-page_sequence = [MyPage, ResultsWaitPage, Results]
+class StealingStage(Page):
+    pass
+
+
+class StealingStageWait(WaitPage):
+    pass
+
+
+class ReportingStage(Page):
+    pass
+
+
+page_sequence = [RoundStartWait, WorkingStage, WorkingStageWait, StealingStage, StealingStageWait, ReportingStage]
