@@ -20,26 +20,29 @@
             </tr>
         </thead>
         <tbody>
-            {{ for player in player.group.get_players() }}
+            {{ for p in player.group.get_players() }}
                 <tr>
-                    <td>Player {{player.id_in_group}}</td>
-                    <td>{{player.field_maybe_none('earnings') or 10}}</td>
+                    <td>Player {{p.id_in_group}}</td>
+                    <td>{{p.field_maybe_none('earnings') or 10}}</td>
                     <td>
-                        <button class="btn btn-primary" type="button" onclick="steal({{player.id_in_group}})">Steal</button>
+                        {{ if p.id_in_group != player.id_in_group }}
+                            <button class="btn btn-primary" type="button" onclick="steal({{p.id_in_group}})">Steal</button>
+                        {{ endif }}
                     </td>
                 </tr>
             {{ endfor }}
         </tbody>
     </table>
     
-    <p>Click 'Next' without stealing.</p>
+    <p>Click 'Next' to continue without stealing.</p>
     <button class="btn btn-primary" id="submit">Next</button>
 
     <input type="hidden" id="selected_to_steal" name="selected_to_steal">
+
+    {{ formfield_errors 'selected_to_steal' }}
     
     <script>
         function steal(player_id) {
-            alert(player_id)
             $("#selected_to_steal").val(player_id)
             $("#submit").click()
         }
