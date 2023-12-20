@@ -1,9 +1,51 @@
 {{ block title }}
-    Stealing Stage
+    Stealing Stage {{player.round_number}}
 {{ endblock }}
 {{ block content }}
 
-    {{ formfields }}
-    {{ next_button }}
+<style>
+    table {
+        text-align: center;
+    }
+</style>
+
+    <p>You may only steal from one player</p>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Player</th>
+                <th scope="col">Stage 1 Earnings</th>
+                <th>Would you like to steal from this player?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ for p in player.group.get_players() }}
+                <tr>
+                    <td>Player {{p.id_in_group}}</td>
+                    <td>{{p.field_maybe_none('earnings') or 10}}</td>
+                    <td>
+                        {{ if p.id_in_group != player.id_in_group }}
+                            <button class="btn btn-primary" type="button" onclick="steal({{p.id_in_group}})">Steal</button>
+                        {{ endif }}
+                    </td>
+                </tr>
+            {{ endfor }}
+        </tbody>
+    </table>
+    
+    <p>Click 'Next' to continue without stealing.</p>
+    <button class="btn btn-primary" id="submit">Next</button>
+
+    <input type="hidden" id="selected_to_steal" name="selected_to_steal">
+
+    {{ formfield_errors 'selected_to_steal' }}
+    
+    <script>
+        function steal(player_id) {
+            $("#selected_to_steal").val(player_id)
+            $("#submit").click()
+        }
+    </script>
 
 {{ endblock }}
